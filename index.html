@@ -393,6 +393,117 @@
 
         .separator { height: 1px; background: var(--border); margin: 16px 0; }
 
+        /* ═══════════════════════════════ RENTABILITÉ MEA ═══════════════════════════════ */
+        .mea-intro {
+            font-size: 0.82rem;
+            color: var(--text-2);
+            line-height: 1.45;
+            margin: -6px 0 16px;
+        }
+        .optional-tag {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-3);
+            margin-left: 4px;
+        }
+        .mea-hero {
+            background: linear-gradient(135deg, var(--urgo-blue) 0%, #0050d0 100%);
+            color: white;
+            border-radius: var(--radius-sm);
+            padding: 18px 16px;
+            text-align: center;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 16px rgba(0,51,160,0.25);
+        }
+        .mea-hero-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            opacity: 0.8;
+            margin-bottom: 6px;
+        }
+        .mea-hero-value {
+            font-family: 'DM Mono', monospace;
+            font-size: 2.3rem;
+            font-weight: 500;
+            line-height: 1.1;
+        }
+        .mea-hero-value small { font-size: 1rem; opacity: 0.85; }
+        .mea-hero-sub {
+            font-size: 0.85rem;
+            margin-top: 6px;
+            opacity: 0.9;
+        }
+        .mea-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+        }
+        .mea-table th {
+            font-size: 0.62rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-3);
+            text-align: right;
+            padding: 0 2px 6px;
+            border-bottom: 1px solid var(--border);
+        }
+        .mea-table td {
+            font-family: 'DM Mono', monospace;
+            text-align: right;
+            padding: 2px 2px 10px;
+            white-space: nowrap;
+            color: var(--text);
+            border-bottom: 1px solid var(--border);
+        }
+        .mea-table tr.mea-label-row td {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-align: left;
+            color: var(--text-2);
+            padding: 10px 2px 2px;
+            border-bottom: none;
+            white-space: normal;
+        }
+        .mea-table tr.mea-highlight td { background: var(--urgo-blue-l); }
+        .mea-table tr.mea-highlight.mea-label-row td { color: var(--urgo-blue); }
+        .mea-table td.neg { color: var(--danger); font-weight: 600; }
+        .mea-table td.pos { color: var(--success); font-weight: 600; }
+        .mea-synthese {
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            border-left: 4px solid var(--urgo-blue);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text);
+        }
+        .mea-copy {
+            margin-top: 10px;
+            background: var(--surface);
+            color: var(--urgo-blue);
+            border: 1.5px solid var(--urgo-blue);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .mea-rappel {
+            background: var(--warning-l);
+            color: #8a4a00;
+            border: 1.5px solid #ffcc80;
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            font-size: 0.85rem;
+            line-height: 1.45;
+        }
+
         /* ═══════════════════════════════ CLAVIER ═══════════════════════════════ */
         .keyboard-overlay {
             position: fixed;
@@ -598,6 +709,10 @@
             <span class="tab-icon">⚖️</span>
             Concurrence
         </button>
+        <button class="tab-btn" onclick="showTab('mea', this)">
+            <span class="tab-icon">🎯</span>
+            MEA
+        </button>
     </nav>
 
     <!-- PANELS -->
@@ -775,6 +890,105 @@
             </div>
         </div>
 
+        <!-- PANEL 4 : RENTABILITÉ MEA -->
+        <div class="panel" id="panel-mea">
+
+            <div class="card">
+                <div class="card-title"><span>🎯</span> Rentabilité MEA</div>
+                <p class="mea-intro">Volume minimum à demander au pharmacien pour qu'une remise de mise en avant ne fasse pas baisser le CA Urgo. Montants en € HT, à partir des prix nets remisés unitaires.</p>
+
+                <div class="form-group">
+                    <label>Prix net unitaire habituel HT (€)</label>
+                    <div id="input-mea-prix-hab" class="fake-input" placeholder="Ex : 6,50"
+                         onclick="focusInput('input-mea-prix-hab', 'decimal', 'Prix net habituel')"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Volume réalisé N-1 (unités)</label>
+                    <div id="input-mea-vol-n1" class="fake-input" placeholder="Ex : 144"
+                         onclick="focusInput('input-mea-vol-n1', 'integer', 'Volume N-1')"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Prix net unitaire MEA HT (€)</label>
+                    <div id="input-mea-prix-mea" class="fake-input" placeholder="Ex : 5,60"
+                         onclick="focusInput('input-mea-prix-mea', 'decimal', 'Prix net MEA')"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><span>⚙️</span> Options</div>
+
+                <div class="form-group">
+                    <label>Objectif de croissance (%) <span class="optional-tag">facultatif</span></label>
+                    <div id="input-mea-objectif" class="fake-input" placeholder="Ex : 15"
+                         onclick="focusInput('input-mea-objectif', 'decimal', 'Objectif de croissance %')"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Colisage — multiple de commande <span class="optional-tag">facultatif</span></label>
+                    <div id="input-mea-colisage" class="fake-input" placeholder="Ex : 6 ou 12"
+                         onclick="focusInput('input-mea-colisage', 'integer', 'Colisage')"></div>
+                </div>
+            </div>
+
+            <div class="card" id="mea-message-card">
+                <div class="advantage-box advantage-neutral" id="mea-message">
+                    Renseignez le prix net habituel, le volume N-1 et le prix net MEA.
+                </div>
+            </div>
+
+            <div id="mea-resultats" style="display:none;">
+                <div class="card">
+                    <div class="mea-hero">
+                        <div class="mea-hero-label">Volume minimum à demander</div>
+                        <div class="mea-hero-value"><span id="mea-vol-min">—</span> <small>unités</small></div>
+                        <div class="mea-hero-sub" id="mea-vol-sup">—</div>
+                    </div>
+
+                    <table class="mea-table">
+                        <thead>
+                            <tr><th>Volume</th><th>Prix net</th><th>CA Urgo</th><th>Écart vs N-1</th></tr>
+                        </thead>
+                        <tbody id="mea-tableau"></tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <div class="card-title"><span>📐</span> Détail</div>
+                    <div class="result-row">
+                        <span class="result-label">CA N-1</span>
+                        <span class="result-value" id="mea-ca-n1">—</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Seuil exact avant arrondi</span>
+                        <span class="result-value" id="mea-seuil-brut">—</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Perte si remise accordée sans contrepartie</span>
+                        <span class="result-value" id="mea-perte" style="color:var(--danger)">—</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Gain de marge pharmacien / unité</span>
+                        <span class="result-value" id="mea-gain-pharma" style="color:var(--success)">—</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title"><span>💬</span> Argument prêt à l'emploi</div>
+                    <div class="mea-synthese" id="mea-synthese">—</div>
+                    <button class="mea-copy" id="mea-copy-btn" onclick="copierSyntheseMEA()">Copier la phrase</button>
+                </div>
+
+                <div class="card">
+                    <div class="mea-rappel">
+                        💡 <strong>Le volume minimum est un plancher, pas un objectif.</strong>
+                        Négociez aussi l'emplacement (tête de gondole, comptoir, vitrine), la durée et la PLV.
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- CLAVIER NUMÉRIQUE -->
@@ -936,6 +1150,8 @@
 
         // ═══════ CALCULS ═══════
         function calculerTout() {
+            calculerMEA();
+
             const pxCat  = getVal('input-px-cat');
             const remise = getVal('input-remise');
             const pvTtc  = getVal('input-pv-ttc');
@@ -1005,6 +1221,130 @@
             } else {
                 elAvt.className = 'advantage-box advantage-neutral';
                 elAvt.innerHTML = '≈ Performances équivalentes à la concurrence sur ce volume.';
+            }
+        }
+
+// ═══════ RENTABILITÉ MEA ═══════
+        function lireMEA(id) {
+            const txt = (document.getElementById(id).innerText || '').trim().replace(',', '.');
+            if (txt === '') return null;
+            const v = parseFloat(txt);
+            return isNaN(v) ? 0 : v;
+        }
+
+        const fmtNbFR  = (v, dec) => new Intl.NumberFormat('fr-FR', { minimumFractionDigits: dec, maximumFractionDigits: dec }).format(v);
+        const fmtEurFR = v => fmtNbFR(v, 2) + ' €';
+        const fmtUnFR  = v => fmtNbFR(v, 0);
+        const signeFR  = v => (v > 0 ? '+' : v < 0 ? '−' : '');
+
+        // Arrondi à l'unité (ou au multiple de colisage) supérieur.
+        // La tolérance évite qu'un 220,00000000003 dû aux flottants devienne 221.
+        function arrondiSupMEA(x, colisage) {
+            const eps = 1e-9;
+            if (colisage && colisage > 0) return Math.ceil(x / colisage - eps) * colisage;
+            return Math.ceil(x - eps);
+        }
+
+        function calcMEA(prixHab, volN1, prixMea, objectif, colisage) {
+            const caN1        = volN1 * prixHab;
+            const seuilBrut   = caN1 / prixMea;
+            const volMin      = arrondiSupMEA(seuilBrut, colisage);
+            const volSup      = volMin - volN1;
+            const volSupPct   = volSup / volN1 * 100;
+            const perte       = volN1 * (prixHab - prixMea);
+            const gainPharma  = prixHab - prixMea;
+            const caSansContr = volN1 * prixMea;
+            const caVolMin    = volMin * prixMea;
+            let volObj = null, caObj = null;
+            if (objectif && objectif > 0) {
+                volObj = arrondiSupMEA(volMin * (1 + objectif / 100), colisage);
+                caObj  = volObj * prixMea;
+            }
+            return { caN1, seuilBrut, volMin, volSup, volSupPct, perte, gainPharma, caSansContr, caVolMin, volObj, caObj };
+        }
+
+        function ligneMEA(label, vol, prix, ca, ecart, highlight) {
+            const cls = highlight ? ' mea-highlight' : '';
+            const ecartCls = ecart < -0.005 ? 'neg' : ecart > 0.005 ? 'pos' : '';
+            const ecartTxt = Math.abs(ecart) < 0.005 ? '0,00 €' : signeFR(ecart) + fmtEurFR(Math.abs(ecart));
+            return `<tr class="mea-label-row${cls}"><td colspan="4">${label}</td></tr>` +
+                   `<tr class="${cls.trim()}"><td>${fmtUnFR(vol)}</td><td>${fmtEurFR(prix)}</td><td>${fmtEurFR(ca)}</td><td class="${ecartCls}">${ecartTxt}</td></tr>`;
+        }
+
+        function calculerMEA() {
+            const prixHab  = lireMEA('input-mea-prix-hab');
+            const volN1    = lireMEA('input-mea-vol-n1');
+            const prixMea  = lireMEA('input-mea-prix-mea');
+            const objectif = lireMEA('input-mea-objectif') || 0;
+            const colisage = Math.floor(lireMEA('input-mea-colisage') || 0);
+
+            const msgCard = document.getElementById('mea-message-card');
+            const msg     = document.getElementById('mea-message');
+            const res     = document.getElementById('mea-resultats');
+            const afficherMessage = (texte, erreur) => {
+                msg.className = 'advantage-box ' + (erreur ? 'advantage-negative' : 'advantage-neutral');
+                msg.textContent = texte;
+                msgCard.style.display = '';
+                res.style.display = 'none';
+            };
+
+            if (prixHab === null || volN1 === null || prixMea === null) {
+                afficherMessage('Renseignez le prix net habituel, le volume N-1 et le prix net MEA.', false);
+                return;
+            }
+            if (prixHab <= 0 || volN1 <= 0 || prixMea <= 0) {
+                afficherMessage('Le prix net habituel, le volume N-1 et le prix net MEA doivent être supérieurs à 0.', true);
+                return;
+            }
+            if (prixMea >= prixHab) {
+                afficherMessage('Le prix MEA doit être inférieur au prix habituel.', true);
+                return;
+            }
+
+            const r = calcMEA(prixHab, volN1, prixMea, objectif, colisage);
+            msgCard.style.display = 'none';
+            res.style.display = '';
+
+            document.getElementById('mea-vol-min').textContent = fmtUnFR(r.volMin);
+            document.getElementById('mea-vol-sup').textContent =
+                `soit ${signeFR(r.volSup)}${fmtUnFR(Math.abs(r.volSup))} unités vs N-1 (${signeFR(r.volSup)}${fmtNbFR(Math.abs(r.volSupPct), 1)} %)` +
+                (colisage > 0 ? ` · colisage de ${fmtUnFR(colisage)}` : '');
+
+            let lignes =
+                ligneMEA('Habituel N-1', volN1, prixHab, r.caN1, 0, false) +
+                ligneMEA('MEA sans contrepartie (même volume N-1)', volN1, prixMea, r.caSansContr, r.caSansContr - r.caN1, false) +
+                ligneMEA('MEA au volume minimum', r.volMin, prixMea, r.caVolMin, r.caVolMin - r.caN1, true);
+            if (r.volObj !== null) {
+                lignes += ligneMEA(`MEA objectif (+${fmtNbFR(objectif, objectif % 1 ? 1 : 0)} %)`, r.volObj, prixMea, r.caObj, r.caObj - r.caN1, false);
+            }
+            document.getElementById('mea-tableau').innerHTML = lignes;
+
+            document.getElementById('mea-ca-n1').textContent       = fmtEurFR(r.caN1);
+            document.getElementById('mea-seuil-brut').textContent  = fmtNbFR(r.seuilBrut, 2) + ' unités';
+            document.getElementById('mea-perte').textContent       = '−' + fmtEurFR(r.perte);
+            document.getElementById('mea-gain-pharma').textContent = '+' + fmtEurFR(r.gainPharma) + ' / unité';
+
+            let phrase = `Pour accorder la remise MEA, demandez au moins ${fmtUnFR(r.volMin)} unités ` +
+                         `(${signeFR(r.volSup)}${fmtUnFR(Math.abs(r.volSup))}, soit ${signeFR(r.volSup)}${fmtNbFR(Math.round(Math.abs(r.volSupPct)), 0)} %). ` +
+                         `En dessous, Urgo perd de la valeur.`;
+            if (r.volObj !== null) {
+                phrase += ` Avec l'objectif de croissance de +${fmtNbFR(objectif, objectif % 1 ? 1 : 0)} %, visez ${fmtUnFR(r.volObj)} unités.`;
+            }
+            document.getElementById('mea-synthese').textContent = phrase;
+            document.getElementById('mea-copy-btn').textContent = 'Copier la phrase';
+        }
+
+        function copierSyntheseMEA() {
+            const texte = document.getElementById('mea-synthese').textContent;
+            const btn = document.getElementById('mea-copy-btn');
+            const ok = () => { btn.textContent = 'Copié ✓'; };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(texte).then(ok).catch(() => {});
+            } else {
+                const ta = document.createElement('textarea');
+                ta.value = texte; document.body.appendChild(ta); ta.select();
+                try { document.execCommand('copy'); ok(); } catch (e) {}
+                ta.remove();
             }
         }
 
